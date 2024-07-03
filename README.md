@@ -33,8 +33,8 @@ A new Flutter project.
 
 ### Projet
 
-- constitution du groupe (1 à 2)
-- Sujet libre (à valider)
+- Projet OM
+- Informations sur L'Olympique de Marseille
 - Éléments obligatoires...
     - écran home
     - élément principal 
