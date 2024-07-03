@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_2/content.dart';
-import 'package:test_2/styles.dart';
+import './screen/content_screen.dart';
 
 void main() {
   runApp(const MainApp());
@@ -14,7 +13,6 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "OM App",
-      theme: myTheme,
       home: const ContentScreen(),
     );
   }

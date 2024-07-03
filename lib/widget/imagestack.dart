@@ -1,49 +1,46 @@
 import 'package:flutter/material.dart';
+import '../model/TeamForApiFootball.dart'; // Ajuste le chemin correctement
 
-class ImageStack extends StatelessWidget {
-  final String imageName;
-  final String text;
+void main() {
+  runApp(MyApp());
+}
 
-  const ImageStack({
-    super.key,
-    required this.imageName,
-    required this.text,
-  });
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          height: 400,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(imageName),
-              fit: BoxFit.fitHeight,
-            ),
+    return MaterialApp(
+      title: 'Exemple d\'application Flutter avec API-Football',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Équipe de l\'OM'),
+        ),
+        body: Center(
+          child: FutureBuilder<TeamForApiFootball>(
+            future: FootballApi.fetchOMData(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return Text('Erreur: ${snapshot.error}');
+              } else {
+                final team = snapshot.data;
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text('Nom de l\'équipe: ${team.name}'),
+                    Text('Pays: ${team.country}'),
+                    // Ajoute d'autres champs ici selon le modèle TeamForApiFootball
+                  ],
+                );
+              }
+            },
           ),
         ),
-        Positioned(
-          bottom: 20,
-          left: 20,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.5),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(2),
-              child: Center(
-                child: Text(
-                  text,
-                  style: const TextStyle(color: Colors.black),
-                ),
-              ),
-            ),
-          ),
-        )
-      ],
+      ),
     );
   }
 }
