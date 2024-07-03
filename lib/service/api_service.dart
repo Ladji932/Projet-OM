@@ -14,6 +14,7 @@ Future<Team> fetchTeam() async {
   try {
     final prettyJson = const JsonEncoder.withIndent('  ').convert(json.decode(response.body));
   } catch (e) {
+    print(e);
   }
 
   if (response.statusCode == 200) {
@@ -24,31 +25,3 @@ Future<Team> fetchTeam() async {
   }
 }
 
-Future<Team> fetchOMData() async {
-  final String apiUrl = 'https://cors-anywhere.herokuapp.com/https://api-football.com/demo/v4/teams/search/Olympique%20de%20Marseille';
-
-  final Map<String, String> headers = {
-    'x-rapidapi-host': 'api-football-v1.p.rapidapi.com',
-    'x-rapidapi-key': '4d7b7126e26d46f7306b38de98594d96', 
-    'Accept': 'application/json',
-  };
-
-  // Effectuer la requête GET
-  final http.Response response = await http.get(Uri.parse(apiUrl), headers: headers);
-
-  // Vérifier le statut de la réponse
-  if (response.statusCode == 200) {
-    // Conversion du JSON en Map
-    final Map<String, dynamic> responseData = json.decode(response.body);
-
-    // Affichage des données récupérées (pour le débogage)
-    print('Response data: $responseData');
-
-    // Retourner les données sous forme d'objet Team (à adapter selon ton modèle Team)
-    return Team.fromJson(responseData['api']['teams'][0]);
-  } else {
-    // Affichage du statut de la réponse en cas d'erreur
-    print('Request failed with status: ${response.statusCode}');
-    throw Exception('Échec du chargement de l\'équipe');
-  }
-}
