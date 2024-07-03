@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../model/team.dart'; // Ajuste le chemin selon tes besoins
+import '../model/team.dart'; 
 
 Future<Team> fetchTeam() async {
   final url = Uri.parse('https://cors-anywhere.herokuapp.com/https://api.football-data.org/v2/teams/516');
